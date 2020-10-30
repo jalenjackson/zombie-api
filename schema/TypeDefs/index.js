@@ -10,7 +10,7 @@ const TypeDefs = gql`
     type Zombie {
         id: ID!
         name: String!
-        location: ID!
+        location: ID
     }
 `;
 

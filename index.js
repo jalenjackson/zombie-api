@@ -5,5 +5,5 @@ const resolvers = require('./schema/Resolvers/index');
 const server = new ApolloServer({ typeDefs, resolvers });
 
 server.listen().then(({ url })  => {
-   console.log(`GraphQL server started at  ${url}`);
+   console.log(`GraphQL server started at ${url}`);
 });

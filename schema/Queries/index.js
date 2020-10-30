@@ -4,6 +4,7 @@ const Queries = gql`
     type Query {
         locations: [Location]!
         location(id: ID!): Location
+        zombies: [Zombie]
     }
 `;
 
