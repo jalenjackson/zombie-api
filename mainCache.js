@@ -3,9 +3,9 @@ const mainCache = new NodeCache();
 const uuidv4 = require('./utils/generateUUID');
 
 const Locations = [
-    { id: uuidv4(), name: 'Hospital', zombies: [] },
-    { id: uuidv4(), name: 'School', zombies: [] },
-    { id: uuidv4(), name: 'Warehouse', zombies: [] }
+    { id: '1', name: 'Hospital' },
+    { id: '2', name: 'School' },
+    { id: '3', name: 'Warehouse' }
 ];
 
 const Zombies = [

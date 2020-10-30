@@ -10,7 +10,7 @@ const Mutations = gql`
     
     input ZombieInput {
         name: String!
-        location: ID!
+        location: ID
         id: ID!
     }
 `;

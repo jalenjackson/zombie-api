@@ -1,31 +1,48 @@
 const mainCache = require('../../../../mainCache');
+const FetchLocation = require('./FetchLocation');
+
 
 function FetchZombies() {
     const zombies = mainCache.get('zombies');
+    const locationsCache = mainCache.get('locations');
 
-    console.log(zombies)
+    let locations = {
+        noLocation: []
+    };
 
-    // sort zombies by location and split into objects. { hospital: [Zombie], warehouse: [Zombie] }
+    let locationsFound = [];
 
-    /*
-    [ { id: 'a34ca090-5b77-44b0-8f5a-acbc67c58aba',
-    name: 'Zombie A',
-    location: null },
-  { id: 'f53dc887-d795-42e9-ae38-de7226576b71',
-    name: 'Zombie B',
-    location: null },
-  { id: 'a6d88aa0-0101-46e8-afc5-d5f6f1d463a4',
-    name: 'Zombie C',
-    location: null },
-  { id: '2b8364b2-b7d2-4713-b0d0-a473c0df49e3',
-    name: 'Zombie D',
-    location: null },
-  { id: '7ffd3cbe-1cd1-4ef0-90fb-199337397886',
-    name: 'Zombie E',
-    location: null } ]
-     */
+    zombies.map(zombie => {
+        if (zombie.location) {
+            const isLocationFoundAlready = locationsFound.find(l => l.id === zombie.location);
 
-    return zombies || [];
+            if (!isLocationFoundAlready) {
+                const locationFound = FetchLocation({ id: zombie.location });
+
+                if (locationFound) {
+                    locationsFound.push(locationFound);
+                    locations[locationFound.name] = [];
+                    locations[locationFound.name].push(zombie);
+                }
+            } else {
+                locations[isLocationFoundAlready.name].push(zombie);
+            }
+        } else {
+            locations.noLocation.push(zombie);
+        }
+    });
+
+    const locationKeys = Object.keys(locations);
+
+    locationsCache.map(l => {
+       if (locationKeys.indexOf(l.name) === -1) {
+           locations[l.name] = l;
+       }
+    });
+
+    return {
+        response: locations
+    }
 }
 
 module.exports = FetchZombies;
