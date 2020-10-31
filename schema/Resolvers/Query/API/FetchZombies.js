@@ -1,18 +1,15 @@
 const mainCache = require('../../../../mainCache');
 const FetchLocation = require('./FetchLocation');
 
-
 function FetchZombies() {
     const zombies = mainCache.get('zombies');
     const locationsCache = mainCache.get('locations');
 
-    let locations = {
-        noLocation: []
-    };
-
+    let locations = {};
     let locationsFound = [];
 
     zombies.map(zombie => {
+
         if (zombie.location) {
             const isLocationFoundAlready = locationsFound.find(l => l.id === zombie.location);
 
@@ -21,14 +18,13 @@ function FetchZombies() {
 
                 if (locationFound) {
                     locationsFound.push(locationFound);
-                    locations[locationFound.name] = [];
-                    locations[locationFound.name].push(zombie);
+                    locations[locationFound.name] = locationFound;
+                    locations[locationFound.name].zombies = [];
+                    locations[locationFound.name].zombies.push(zombie);
                 }
             } else {
-                locations[isLocationFoundAlready.name].push(zombie);
+                locations[isLocationFoundAlready.name].zombies.push(zombie);
             }
-        } else {
-            locations.noLocation.push(zombie);
         }
     });
 
@@ -37,6 +33,7 @@ function FetchZombies() {
     locationsCache.map(l => {
        if (locationKeys.indexOf(l.name) === -1) {
            locations[l.name] = l;
+           locations[l.name].zombies = [];
        }
     });
 
