@@ -14,7 +14,7 @@ function FetchLocation(data) {
         if (locations && locations.length > 0) {
             const locationFound = locations.find(location => location.id === data.id);
 
-            return locationFound || error('No Location was found with the given ID');
+            return locationFound || null
         }
     } catch (e) {
         return error(e.message || 'An error occurred');

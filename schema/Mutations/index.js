@@ -5,6 +5,8 @@ const Mutations = gql`
         createNewLocation(name: String!, zombies: [ZombieInput]!): Location
         createNewZombie(name: String!, locationID: ID!): Location
         moveZombieToLocation(locationID: ID!, zombieID: ID!): Location
+        deleteZombie(zombieID: ID!): Location
+        deleteLocation(locationID: ID!): Location
     }
     
     input ZombieInput {
